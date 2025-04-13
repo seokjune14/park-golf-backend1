@@ -1,20 +1,16 @@
 const pool = require("../config/db");
-const bcrypt = require("bcrypt");
 
-// 회원가입 처리 (비밀번호 해싱 적용)
+// 회원가입 처리 (비밀번호 평문 저장)
 const createUser = async (req, res) => {
   const { userName, userEmail, userPw, userinfo, userImg } = req.body;
 
   try {
     console.log("📥 회원가입 요청:", req.body);
 
-    // bcrypt를 사용하여 비밀번호 해싱 (saltRounds: 10)
-    const saltRounds = 10;
-    const hashedPw = await bcrypt.hash(userPw, saltRounds);
-
+    // 비밀번호 해시 없이 그대로 저장
     const [result] = await pool.query(
       "INSERT INTO users (userName, userEmail, userPw, userinfo, userImg) VALUES (?, ?, ?, ?, ?)",
-      [userName, userEmail, hashedPw, userinfo, userImg]
+      [userName, userEmail, userPw, userinfo, userImg]
     );
 
     res.status(201).json({
