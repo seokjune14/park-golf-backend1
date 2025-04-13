@@ -15,7 +15,7 @@ const loginInstructor = async (req, res) => {
   try {
     const [rows] = await pool.query(
       "SELECT * FROM users WHERE userEmail = ?",
-      [userEmail]
+      [userEmail.trim()]
     );
 
     if (rows.length === 0) {
@@ -23,13 +23,15 @@ const loginInstructor = async (req, res) => {
     }
 
     const user = rows[0];
+    console.log("🔍 조회된 유저:", user.userEmail, "| 역할:", user.userRole);
 
-    if (user.userRole !== "instructor") {
+    // 강사 계정이 아닌 경우
+    if (user.userRole.trim().toLowerCase() !== "instructor") {
       return res.status(401).json({ message: "강사 계정이 아닙니다." });
     }
 
-    // 평문 비밀번호 직접 비교
-    if (user.userPw !== userPw) {
+    // 평문 비밀번호 직접 비교 (공백 방지)
+    if (user.userPw.trim() !== userPw.trim()) {
       return res.status(401).json({ message: "이메일 또는 비밀번호가 틀렸습니다." });
     }
 
