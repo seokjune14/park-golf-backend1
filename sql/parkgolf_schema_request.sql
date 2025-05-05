@@ -38,5 +38,5 @@ INSERT INTO lessons (userNum, lesName, lesinfo, lesPlace, lesPrice, lesTime) VAL
 (2, '입문 레슨', '기초부터 배우는 파크골프 입문 과정입니다.', '서울 파크골프장', 20000, '10:00:00'),
 (2, '중급 레슨', '실전 중심의 중급자 대상 레슨입니다.', '부산 파크골프장', 30000, '14:00:00');
 
--- 6. 외래키 체크 다시 활성화
+-- 6. 외래키 체크 다시 활성
 SET FOREIGN_KEY_CHECKS = 1;
