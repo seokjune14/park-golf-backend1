@@ -7,6 +7,7 @@ const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const loginRoutes = require("./routes/loginRoutes");
 const findRoutes = require("./routes/findRoutes");
+const applicationRoutes = require("./routes/applicationRoutes");
 dotenv.config();
 const app = express();
 
@@ -17,6 +18,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/lessons", lessonRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/find", findRoutes);
+app.use("/api/applications", applicationRoutes);
 
 app.get("/test-db", async (req, res) => {
   try {
