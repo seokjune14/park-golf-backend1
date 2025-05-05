@@ -2,6 +2,7 @@
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- 1. 기존 테이블 삭제
+DROP TABLE IF EXISTS applications;
 DROP TABLE IF EXISTS lessons;
 DROP TABLE IF EXISTS users;
 
@@ -38,5 +39,21 @@ INSERT INTO lessons (userNum, lesName, lesinfo, lesPlace, lesPrice, lesTime) VAL
 (2, '입문 레슨', '기초부터 배우는 파크골프 입문 과정입니다.', '서울 파크골프장', 20000, '10:00:00'),
 (2, '중급 레슨', '실전 중심의 중급자 대상 레슨입니다.', '부산 파크골프장', 30000, '14:00:00');
 
--- 6. 외래키 체크 다시 활성
+-- 6. 레슨 신청(application) 테이블 생성
+CREATE TABLE applications (
+  appId INT AUTO_INCREMENT PRIMARY KEY,             -- 신청 고유번호
+  userNum INT NOT NULL,                             -- 신청한 수강생
+  lesNum INT NOT NULL,                              -- 신청한 레슨
+  status ENUM('대기', '승인', '거절', '취소') DEFAULT '대기',  -- 신청 상태
+  createdAt DATETIME DEFAULT NOW(),
+  FOREIGN KEY (userNum) REFERENCES users(userNum) ON DELETE CASCADE,
+  FOREIGN KEY (lesNum) REFERENCES lessons(lesNum) ON DELETE CASCADE
+);
+
+-- 7. 예시 신청 데이터 삽입
+INSERT INTO applications (userNum, lesNum, status) VALUES
+(1, 1, '대기'),
+(1, 2, '승인');
+
+-- 8. 외래키 체크 다시 활성화
 SET FOREIGN_KEY_CHECKS = 1;
