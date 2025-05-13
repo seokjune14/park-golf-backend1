@@ -8,6 +8,8 @@ const userRoutes = require("./routes/userRoutes");
 const loginRoutes = require("./routes/loginRoutes");
 const findRoutes = require("./routes/findRoutes");
 const applicationRoutes = require("./routes/applicationRoutes");
+const cartRoutes = require("./routes/cartRoutes");
+
 dotenv.config();
 const app = express();
 
@@ -19,6 +21,8 @@ app.use("/api/lessons", lessonRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/find", findRoutes);
 app.use("/api/applications", applicationRoutes);
+app.use("/api/cart", cartRoutes);
+
 
 app.get("/test-db", async (req, res) => {
   try {
